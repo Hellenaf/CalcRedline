@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Calculadora Redline</title>
     <link rel="icon" type="image/png" href="LOGO-REDLINE-2.png">
-    
-    <!-- Tailwind CSS -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React & ReactDOM -->
+    
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <!-- Babel -->
+    
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script>
         Babel.registerPreset('react-classic', {
@@ -20,7 +19,7 @@
             ]
         });
     </script>
-    <!-- Firebase Compat -->
+    
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -30,8 +29,7 @@
         
         body { font-family: 'Inter', sans-serif; }
         h1, h2, h3, .font-heading { font-family: 'Rajdhani', sans-serif; }
-        
-        /* Scrollbar Global Estilizada */
+
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(82, 82, 91, 0.5); border-radius: 4px; }
@@ -41,7 +39,6 @@
         .hide-scroll::-webkit-scrollbar { display: none; }
         .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Glassmorphism Restaurado (Translúcido) */
         .glass { 
             @apply bg-white/70 dark:bg-zinc-950/70 backdrop-blur-xl border-b border-zinc-200 dark:border-white/5;
         }
@@ -147,12 +144,8 @@
 <body class="bg-gray-100 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 selection:bg-red-500/30 h-screen w-screen overflow-hidden flex flex-col transition-colors duration-300">
     <div id="root" class="w-full h-full flex flex-col"></div>
 
-
-
     <script type="text/babel" data-presets="env,react-classic">
-        // --- CONFIGURAÇÃO FIREBASE (OPCIONAL) ---
-        // Se desejar sincronizar preços e receitas em nuvem, insira os dados do seu Firebase.
-        // Se mantido com "SUA_API_KEY_AQUI", a calculadora funcionará normalmente com salvamento local (LocalStorage).
+
         const firebaseConfig = {
             apiKey: "SUA_API_KEY_AQUI",
             authDomain: "SEU_PROJETO.firebaseapp.com",
@@ -237,7 +230,7 @@
                 order: 5, template: 'kits',
                 title: "KITS", partnershipEnabled: false, discountValue: 0,
                 kitValue: 8000, taxValue: 4000,
-                sections: [] // Kits logic doesn't use sections, it uses hardcoded math
+                sections: [] 
             }
         };
 
@@ -254,14 +247,14 @@
                     return;
                 }
                 
-                const duration = 500; // ms
+                const duration = 500; 
                 const startTime = performance.now();
                 let animationFrameId;
                 
                 const updateNumber = (now) => {
                     const elapsed = now - startTime;
                     const progress = Math.min(elapsed / duration, 1);
-                    const easeProgress = progress * (2 - progress); // easeOutQuad
+                    const easeProgress = progress * (2 - progress); 
                     const current = start + (end - start) * easeProgress;
                     setDisplayValue(current);
                     
@@ -352,8 +345,7 @@
                     console.error("Erro ao salvar no LocalStorage:", e);
                 }
             };
-            
-            // State do Tema
+
             const [isDarkMode, setIsDarkMode] = useState(() => {
                 if (typeof window !== 'undefined') {
                     const saved = localStorage.getItem('theme');
@@ -413,10 +405,10 @@
 
             return (
                 <div className="h-full w-full flex flex-col relative transition-colors duration-300">
-                    {/* Background Accents */}
+                    {}
                     <div className="fixed top-0 left-0 w-full h-96 bg-red-600/10 rounded-full blur-[128px] -translate-y-1/2 pointer-events-none opacity-0 dark:opacity-100 transition-opacity duration-500 z-0"></div>
                     
-                    {/* Header */}
+                    {}
                     <header className="flex-none glass z-[100] relative">
                         <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
                             <div className="flex items-center gap-2 md:gap-3">
@@ -442,7 +434,7 @@
                         </div>
                     </header>
 
-                    {/* Main Area */}
+                    {}
                     <main className="flex-1 w-full relative flex flex-col overflow-hidden z-10">
                         {vehicleData ? (
                             activeTab === 'calculator' ? 
@@ -477,8 +469,7 @@
             const [counters, setCounters] = useState({});
             const [copied, setCopied] = useState(null);
             const [toast, setToast] = useState({ show: false, message: '' });
-            
-            // Kits State
+
             const [kitsQty, setKitsQty] = useState('');
 
             const [pulseNeon, setPulseNeon] = useState(false);
@@ -487,8 +478,7 @@
                 if (selectedType !== 'terrestres') return false;
                 const currentCat = data[selectedType];
                 if (!currentCat || !currentCat.sections) return false;
-                
-                // Find section and item
+
                 for (let sIdx = 0; sIdx < currentCat.sections.length; sIdx++) {
                     const sec = currentCat.sections[sIdx];
                     for (let iIdx = 0; iIdx < sec.items.length; iIdx++) {
@@ -513,8 +503,7 @@
             const fullTuningStats = useMemo(() => {
                 const currentCat = data[selectedType];
                 if (!currentCat || !currentCat.sections) return { selected: 0, total: 0 };
-                
-                // Find section named "FULL TUNING"
+
                 const ftSectionIdx = currentCat.sections.findIndex(s => s.name.toUpperCase() === 'FULL TUNING');
                 if (ftSectionIdx === -1) return { selected: 0, total: 0 };
                 
@@ -636,9 +625,9 @@
 
             return (
                 <div className="flex flex-col h-full w-full">
-                    {/* Rainbow Border Overlay for Chameleon Color */}
+                    {}
                     <div className={`fixed inset-0 pointer-events-none z-[9999] transition-all duration-1000 ${isChameleonSelected ? 'rainbow-border-active' : ''}`} />
-                    {/* Smoke Overlay for Cor da Fumaça */}
+                    {}
                     {showSmoke && (
                         <div className="smoke-container">
                             <div className="smoke-particle smoke-p1"></div>
@@ -653,7 +642,7 @@
                             <div className="smoke-particle smoke-p10"></div>
                         </div>
                     )}
-                    {/* Toast */}
+                    {}
                     {toast.show && (
                         <div className="fixed top-28 left-1/2 -translate-x-1/2 z-[100] toast-enter w-max max-w-[90%]">
                             <div className="bg-zinc-900 text-white px-6 py-3 rounded-xl shadow-2xl border border-white/10 flex items-center gap-3 backdrop-blur-md">
@@ -663,7 +652,7 @@
                         </div>
                     )}
 
-                    {/* TABS MENU */}
+                    {}
                     <div className="flex-none px-4 py-3 border-b border-zinc-200 dark:border-white/5 glass z-20 shadow-sm">
                         <div className="max-w-7xl mx-auto w-full">
                             <div className="flex overflow-x-auto hide-scroll gap-6 md:gap-8 items-center">
@@ -680,11 +669,11 @@
                         </div>
                     </div>
 
-                    {/* CONTENT CONTAINER */}
+                    {}
                     <div className="flex-1 overflow-y-auto w-full relative p-4 scroll-smooth pb-36 lg:pb-4 flex flex-col">
                         <div className="max-w-7xl mx-auto w-full flex-grow mb-12">
                             {isKitsMode ? (
-                                // --- VIEW DE KITS ---
+                                
                                 <div className="flex flex-col items-center justify-center min-h-[50vh] animate-fade">
                                     <div className="glass-card p-4 md:p-8 rounded-3xl w-full max-w-lg text-center border-t border-white/20 mx-auto">
                                         <div className="w-20 h-20 bg-red-600/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-red-500 shadow-xl shadow-red-900/10">
@@ -717,9 +706,9 @@
                                     </div>
                                 </div>
                             ) : (
-                                // --- VIEW PADRÃO ---
+                                
                                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                                    {/* Left Column: Items List */}
+                                    {}
                                     <div className="lg:col-span-8 space-y-4">
                                         {current.sections.map((sec, sIdx) => (
                                             <div key={sIdx} className="glass-card rounded-2xl overflow-hidden animate-fade" style={{animationDelay: `${sIdx * 0.1}s`}}>
@@ -771,7 +760,7 @@
                                         ))}
                                     </div>
 
-                                    {/* Right Column: Totals (STICKY DESKTOP) */}
+                                    {}
                                     <div className="hidden lg:block lg:col-span-4 h-full">
                                         <div className="space-y-4 sticky top-4">
                                             <div className="glass-card p-4 rounded-2xl">
@@ -828,7 +817,7 @@
                                                                 <div className="text-blue-500 hover:text-blue-400 cursor-help">
                                                                     <Icons.Info size={16} />
                                                                 </div>
-                                                                {/* Floating Tooltip */}
+                                                                {}
                                                                 <div className="absolute bottom-full right-0 mb-2 w-48 p-3 bg-zinc-800 dark:bg-zinc-900 text-white text-xs rounded-xl shadow-xl border border-white/10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60]">
                                                                     {current.partnershipList}
                                                                     <div className="absolute top-full right-1 -mt-1 border-4 border-transparent border-t-zinc-800 dark:border-t-zinc-900"></div>
@@ -859,7 +848,7 @@
                         </div>
                     </div>
 
-                    {/* Mobile Floating Bar */}
+                    {}
                     <div className="lg:hidden fixed bottom-0 left-0 right-0 glass-float border-t border-zinc-200 dark:border-white/10 z-[90] pb-safe">
                         <div className="p-3 space-y-2">
                             {isKitsMode ? (
@@ -917,7 +906,6 @@
             );
         };
 
-        // ADMIN PANEL
         const AdminPanel = ({ user, isAdmin, setIsAdmin, currentData, onUpdateData, isDarkMode }) => {
             const [pass, setPass] = useState('');
             const [data, setData] = useState(JSON.parse(JSON.stringify(currentData)));
@@ -947,8 +935,7 @@
                 setMsg({t:'Gravando e salvando alterações...', e:false});
                 try {
                     const payload = jsonMode ? JSON.parse(jsonStr) : data;
-                    
-                    // Atualiza o estado local e LocalStorage imediatamente
+
                     onUpdateData(payload);
 
                     let cloudSaved = false;
