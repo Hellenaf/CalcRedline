@@ -1,0 +1,16 @@
+# Firebase cache e depuração
+.firebase/
+firebase-debug.log*
+firebase-debug.*.log*
+
+# Variáveis e ambiente
+.env
+.env.local
+
+# Editores e Sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
